@@ -141,19 +141,19 @@ Nano\nanoLog()->open();
 
 if (param("q","")=="assetsAsCsv") {
 		header('Content-Type:text/plain');
-		$pollerName=param("pollerName","Cryptos");
+		$pollerName=param("pollerName","");
 		$runner->assetsAsCsv($pollerName);
 } else if (param("q","")=="marketQuotesAsCsv") {
 		header('Content-Type:text/plain');
-		$pollerName=param("pollerName","Cryptos");
+		$pollerName=param("pollerName","");
 		$runner->marketQuotesAsCsv($pollerName);
 } else if (param("q","")=="marketLastQuotesAsCsv") {
 		header('Content-Type:text/plain');
-		$pollerName=param("pollerName","Cryptos");
+		$pollerName=param("pollerName","");
 		$runner->marketLastQuotesAsCsv($pollerName);
 } else if (param("q","")=="marketHistoryAsCsv") {
 		header('Content-Type:text/plain');
-		$pollerName=param("pollerName","Cryptos");
+		$pollerName=param("pollerName","");
 		$runner->marketHistoryAsCsv($pollerName);
 } else if (param("q","")=="pollQuotes") {
 
@@ -184,7 +184,7 @@ if (param("q","")=="assetsAsCsv") {
 	my_title("General");
 	Nano\msg(sprintf(my_link("Poll Tester","$domain/MarketPollWeb/tester.php")));
 	Nano\msg(sprintf(my_link("Bot Runner Tester","$domain/MarketBotRunnerWeb/tester.php")));
-	Nano\msg(sprintf(my_link("Bot Runner main","$domain/MarketBotRunnerWeb/index	.php")));
+	Nano\msg(sprintf(my_link("Bot Runner main","$domain/MarketBotRunnerWeb/index.php")));
 
 	my_title("Consultas");
 	Nano\msg(sprintf(my_link("assetsAsCsv","$domain/MarketPollWeb/index.php?q=assetsAsCsv")));
