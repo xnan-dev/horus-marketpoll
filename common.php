@@ -53,6 +53,9 @@ class MarketPollRunner {
 		    	$this->pdoSettings->database()),
 			    $this->pdoSettings->user(),
 			    $this->pdoSettings->password());
+
+ 		$this->pdo->setAttribute(\PDO::ATTR_AUTOCOMMIT, 0);
+
 	}
 
 	private function pdo() {
@@ -74,12 +77,13 @@ class MarketPollRunner {
 
 	function marketPollQuotes($beats,$pollerName,$beatSleep) {
 		try {
-			$this->pdo()->beginTransaction();
+			$txOk=$this->pdo()->beginTransaction();
+
 			$w=$this->pollWorld();
-			$w->pollQuotes($beats,$pollerName,$beatSleep);
-			$this->pdo()->commit();
+			$w->pollQuotes($beats,$pollerName,$beatSleep);			
+			$this->pdo()->commit();			
 		} catch(\Exception $e) {
-			$this->pdo()->rollback();
+			if ($this->pdo()->inTransaction()) $this->pdo()->rollback();
 			Nano\nanoCheck()->checkFailed("marketPollQuotes: msg:".$e->getMessage());
 		}
 	}
