@@ -33,6 +33,11 @@ include_once("settings.php");
 Trurl\Functions::Load;
 PollWorld\Functions::Load;
 
+
+$ok1=set_time_limit(maxExecutionTime());
+$ok2=ini_set("max_execution_time",maxExecutionTime());
+$ok3=ini_set("max_input_time",maxExecutionTime());
+
 function timeZone() {
 	return 'America/Argentina/Buenos_Aires';
 }
@@ -55,7 +60,8 @@ class MarketPollRunner {
 			    $this->pdoSettings->password());
 
  		$this->pdo->setAttribute(\PDO::ATTR_AUTOCOMMIT, 0);
-
+		$this->pdo->beginTransaction();
+		$this->pdo->commit();
 	}
 
 	private function pdo() {
