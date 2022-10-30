@@ -81,7 +81,7 @@ class MarketPollRunner {
 		return $this->pollWorld;
 	}
 
-	function marketPollQuotes($beats,$pollerName,$beatSleep) {
+	function marketPollQuotes($beats,$pollerName,$beatSleep) {		
 		try {
 			$txOk=$this->pdo()->beginTransaction();
 
@@ -91,6 +91,20 @@ class MarketPollRunner {
 		} catch(\Exception $e) {
 			if ($this->pdo()->inTransaction()) $this->pdo()->rollback();
 			Nano\nanoCheck()->checkFailed("marketPollQuotes: msg:".$e->getMessage());
+		}
+	}
+
+
+	function fixPartialBeats($beats,$pollerName,$beatSleep) {		
+		try {
+			$txOk=$this->pdo()->beginTransaction();
+
+			$w=$this->pollWorld();
+			$w->fixPartialBeats($beats,$pollerName,$beatSleep);			
+			$this->pdo()->commit();			
+		} catch(\Exception $e) {
+			if ($this->pdo()->inTransaction()) $this->pdo()->rollback();
+			Nano\nanoCheck()->checkFailed("fixPartialBeats: msg:".$e->getMessage());
 		}
 	}
 
@@ -169,13 +183,27 @@ if (param("q","")=="assetsAsCsv") {
 		$runner->marketHistoryAsCsv($pollerName);
 } else if (param("q","")=="pollQuotes") {
 
-	Nano\nanoPerformance()->track("pollQuotes");
+	Nano\nanoPerformance()->track("runner.pollQuotes");
 
 	$beats=param("beats",1);
 	$beatSleep=param("beatSleep",0);
 	$pollerName=param("pollerName","");
 	header('Content-Type:text/plain');
 	$runner->marketPollQuotes($beats,$pollerName,$beatSleep);
+
+	Nano\nanoPerformance()->track("runner.pollQuotes");
+
+	if (showPerformance()) Nano\nanoPerformance()->summaryWrite();
+
+} else if (param("q","")=="fixPartialBeats") {
+
+	Nano\nanoPerformance()->track("runner.fixPartialBeats");
+
+	$beats=param("beats",1);
+	$beatSleep=param("beatSleep",0);
+	$pollerName=param("pollerName","");
+	header('Content-Type:text/plain');
+	$runner->fixPartialBeats($beats,$pollerName,$beatSleep);
 
 	Nano\nanoPerformance()->track("runner.pollQuotes");
 
