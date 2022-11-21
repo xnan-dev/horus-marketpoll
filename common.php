@@ -123,6 +123,11 @@ class MarketPollRunner {
 		print $w->pollerByName($pollerName)->marketQuotesAsCsv($page,$pageSize);	
 	}
 
+	function marketQuotesAtBeatAsCsv($pollerName,$beat) {
+		$w=$this->pollWorld();
+		print $w->pollerByName($pollerName)->marketQuotesAtBeatAsCsv($beat);	
+	}
+
 	function marketHistoryAsCsv($pollerName) {
 		$w=$this->pollWorld();
 		$page=param("page",0);
@@ -177,6 +182,11 @@ if (param("q","")=="assetsAsCsv") {
 		header('Content-Type:text/plain');
 		$pollerName=param("pollerName","");
 		$runner->marketLastQuotesAsCsv($pollerName);
+} else if (param("q","")=="marketQuotesAtBeatAsCsv") {
+		header('Content-Type:text/plain');
+		$pollerName=param("pollerName","");
+		$beat=param("beat","1");
+		$runner->marketQuotesAtBeatAsCsv($pollerName,$beat);
 } else if (param("q","")=="marketHistoryAsCsv") {
 		header('Content-Type:text/plain');
 		$pollerName=param("pollerName","");
@@ -229,6 +239,7 @@ if (param("q","")=="assetsAsCsv") {
 	my_title("Consultas");
 	Nano\msg(sprintf(my_link("assetsAsCsv","$domain/MarketPollWeb/index.php?q=assetsAsCsv")));
 	Nano\msg(sprintf(my_link("marketQuotesAsCsv","$domain/MarketPollWeb/index.php?q=marketQuotesAsCsv")));
+	Nano\msg(sprintf(my_link("marketQuotesAtBeatAsCsv","$domain/MarketPollWeb/index.php?q=marketQuotesAtBeatAsCsv&beat=1")));
 	Nano\msg(sprintf(my_link("marketLastQuotesAsCsv","$domain/MarketPollWeb/index.php?q=marketLastQuotesAsCsv")));
 	Nano\msg(sprintf(my_link("marketHistoryAsCsv","$domain/MarketPollWeb/index.php?q=marketHistoryAsCsv&page=0&pageSize=20")));
 
