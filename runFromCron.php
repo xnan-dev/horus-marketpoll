@@ -21,6 +21,10 @@ if(cronEnabled() || (array_key_exists("runOnce",$_GET) && $_GET["runOnce"]=="tru
 
 	$lastRunTime = file_exists($lastRunFile) ? file_get_contents($lastRunFile) : 0;
 	
+	if (!is_numeric($lastRunTime)) {
+		$lastRunTime=0;
+		print "runFromCron: warning: lastRunFile:'$lastRunFile' msg:lastRunTime(time) stored must be numeric, broken time ignored.\n";
+	}
 	$diff=time()-$lastRunTime;
 	if ($diff<=dndPollSeconds()) {
 		

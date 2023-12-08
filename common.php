@@ -223,6 +223,7 @@ if (param("q","")=="assetsAsCsv") {
 
 	my_title("General");
 	Nano\msg(sprintf(my_link("Poll Tester","$domain/MarketPollWeb/tester.php")));
+	Nano\msg(sprintf(my_link("Poll Runner runFromCron","$domain/MarketPollWeb/runFromCron.php")));
 	Nano\msg(sprintf(my_link("Bot Runner Tester","$domain/MarketBotRunnerWeb/tester.php")));
 	Nano\msg(sprintf(my_link("Bot Runner main","$domain/MarketBotRunnerWeb/index.php")));
 
