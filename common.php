@@ -3,6 +3,8 @@ namespace xnan\MarketPollWeb;
 
 //Uses: Start
 
+\Conf\Horus\Functions::Load;
+
 // Uses: Nano: Shortcuts
 use xnan\Trurl\Nano;
 Nano\Functions::Load;
@@ -225,7 +227,7 @@ if (param("q","")=="assetsAsCsv") {
 	$runner->marketPollHistory($pollerName);
 } else {
 	print("<PRE>");
-	$domain=Horus\domain();
+	$domain=\Conf\Horus\domain();
 
 	my_title("Help");
 	Nano\msg(sprintf("sessionId:%s",session_id()));
