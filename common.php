@@ -125,9 +125,9 @@ class MarketPollRunner {
 		print $w->pollerByName($pollerName)->marketQuotesAsCsv($page,$pageSize);	
 	}
 
-	function marketQuotesAtBeatAsCsv($pollerName,$beat) {
+	function marketQuotesAtBeatAsCsv($pollerName,$beat,$firstBeat) {
 		$w=$this->pollWorld();
-		print $w->pollerByName($pollerName)->marketQuotesAtBeatAsCsv($beat);	
+		print $w->pollerByName($pollerName)->marketQuotesAtBeatAsCsv($beat,$firstBeat);	
 	}
 
 	function marketHistoryAsCsv($pollerName) {
@@ -188,7 +188,8 @@ if (param("q","")=="assetsAsCsv") {
 		header('Content-Type:text/plain');
 		$pollerName=param("pollerName","");
 		$beat=param("beat","1");
-		$runner->marketQuotesAtBeatAsCsv($pollerName,$beat);
+		$firstBeat=param("firstBeat","false")=="true";
+		$runner->marketQuotesAtBeatAsCsv($pollerName,$beat,$firstBeat);
 } else if (param("q","")=="marketHistoryAsCsv") {
 		header('Content-Type:text/plain');
 		$pollerName=param("pollerName","");
