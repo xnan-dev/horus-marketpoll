@@ -9,15 +9,17 @@ use xnan\Trurl\Horus\MarketPoll;
 
 chdir( __DIR__ );
 
-require("autoloader.php");
 require '../vendor/autoload.php';
+//require("autoloader.php");
 include_once("settings.php");
 
 Trurl\Functions::Load;
+\Conf\MarketPollWeb\Functions::Load;
 
 if(cronEnabled() || (array_key_exists("runOnce",$_GET) && $_GET["runOnce"]=="true")) {
 	
-	$lastRunFile="content/runFromCron.lastRun.txt";
+	$folder = \Conf\MarketPollWeb\dataRootFolder();
+	$lastRunFile = "$folder/content/runFromCron.lastRun.txt";
 
 	$lastRunTime = file_exists($lastRunFile) ? file_get_contents($lastRunFile) : 0;
 	
